@@ -93,6 +93,8 @@ def autoClickSurrounding(rowIn, colIn):
         if surroundingBombNumber(list[0], list[1]) == 0 and UserList[list[0]][list[1]] == "_":
             UserList[list[0]][list[1]] = "0"
             autoClickSurrounding(list[0], list[1])
+        elif surroundingBombNumber(list[0], list[1]) != 0 and UserList[list[0]][list[1]] == "_" and GameMasterList[list[0]][list[1]] != 1:
+            UserList[list[0]][list[1]] = str(surroundingBombNumber(list[0], list[1]))
 
 
 numBombs = int(input("Choose the number of bombs on the field (1 - 99): "))
