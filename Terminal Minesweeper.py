@@ -73,6 +73,27 @@ def surroundingBombNumber(rowIn, colIn):
         row += 1
     return bombNumber
 
+def getSurroundingList(rowIn, colIn):
+    surroundList =[]
+    row = rowIn - 1
+    while row <= (rowIn + 1):
+        if row >= 0 and row < 10:
+            col = colIn - 1
+            while col <= (colIn + 1):
+                if col >= 0 and col < 10:
+                    surround = [row, col]
+                    surroundList.append(surround)
+                col += 1
+        row += 1
+    surroundList.remove([rowIn, colIn])
+    return surroundList       
+
+def autoClickSurrounding(rowIn, colIn):
+    for list in getSurroundingList(rowIn, colIn):
+        if surroundingBombNumber(list[0], list[1]) == 0 and UserList[list[0]][list[1]] == "_":
+            UserList[list[0]][list[1]] = "0"
+            autoClickSurrounding(list[0], list[1])
+
 
 numBombs = int(input("Choose the number of bombs on the field (1 - 99): "))
 createGameMasterField(numBombs)
@@ -84,8 +105,10 @@ guess = 0
 createUserField()
 while guess < (100 - numBombs):
     printUserField()
-    pickRow = (int(input("Choose a row (1 - 10): ")) - 1) 
-    pickColumn = (int(input("Choose a column (1-10): ")) - 1)
+    pickRow = int(input("Choose a row (1 - 10): ")) 
+    pickRow -= 1
+    pickColumn = int(input("Choose a column (1-10): "))
+    pickColumn -= 1
     nextStep = changeUserField(pickRow, pickColumn)
     if nextStep == "Over":
         print("GAME OVER!! YOU HIT A BOMB!")
@@ -98,5 +121,7 @@ while guess < (100 - numBombs):
     elif nextStep == "OK":
         numberOfBombs = surroundingBombNumber(pickRow, pickColumn)
         UserList[pickRow][pickColumn] = str(numberOfBombs)
+        if numberOfBombs == 0:
+            autoClickSurrounding(pickRow, pickColumn)
     guess += 1
         
