@@ -74,7 +74,7 @@ def surroundingBombNumber(rowIn, colIn):
     return bombNumber
 
 
-numBombs = int(input("How many bombs should there be? (1 - 99): "))
+numBombs = int(input("Choose the number of bombs on the field (1 - 99): "))
 createGameMasterField(numBombs)
 
 for row in GameMasterList:
