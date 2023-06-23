@@ -96,16 +96,27 @@ def autoClickSurrounding(rowIn, colIn):
         elif surroundingBombNumber(list[0], list[1]) != 0 and UserList[list[0]][list[1]] == "_" and GameMasterList[list[0]][list[1]] != 1:
             UserList[list[0]][list[1]] = str(surroundingBombNumber(list[0], list[1]))
 
+def gameEnder():
+    num = 0
+    for row in UserList:
+        for col in row:
+            if col == "_":
+                num += 1
+    return num        
+
+
 
 numBombs = int(input("Choose the number of bombs on the field (1 - 99): "))
 createGameMasterField(numBombs)
 
-for row in GameMasterList:
-    print(row)
 
-guess = 0
+#for row in GameMasterList:
+    #print(row)
+
+
 createUserField()
-while guess < (100 - numBombs):
+gameEnd = False
+while gameEnd == False:
     printUserField()
     pickRow = int(input("Choose a row (1 - 10): ")) 
     pickRow -= 1
@@ -125,5 +136,8 @@ while guess < (100 - numBombs):
         UserList[pickRow][pickColumn] = str(numberOfBombs)
         if numberOfBombs == 0:
             autoClickSurrounding(pickRow, pickColumn)
-    guess += 1
-        
+        if numBombs == gameEnder():
+            gameEnd = True
+
+printUserField()
+print("Congratulations! You cleared the board without blowing up!")
