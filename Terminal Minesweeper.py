@@ -1,4 +1,6 @@
 import random
+import time
+
 
 def createGameMasterField(bombInput):
     global GameMasterList
@@ -138,6 +140,7 @@ while gameEnd == False:
             autoClickSurrounding(pickRow, pickColumn)
         if numBombs == gameEnder():
             gameEnd = True
+            printUserField()
+            print("Congratulations! You cleared the board without blowing up!")
 
-printUserField()
-print("Congratulations! You cleared the board without blowing up!")
+time.sleep(30)
